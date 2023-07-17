@@ -2,10 +2,15 @@ import * as vscode from 'vscode';
 
 export function setupView(context: vscode.ExtensionContext) {
     const treeDataProvider = {
-        getChildren: () => ['About CommitGPT'],
+        getChildren: () => ['How to use:',
+        'Use the keybind to stage&commit all changes.',
+        'For Mac: cmd + alt + c',
+        'For Windows: ctrl + alt + c',
+        'Thanks for using CommitGPT!',
+        'Click here to learn more about CommitGPT'],
         getTreeItem: (item: string): vscode.TreeItem => {
             const treeItem = new vscode.TreeItem(item);
-            if (item === 'About CommitGPT') {
+            if (item === 'Click here to learn more about CommitGPT') {
                 treeItem.command = {
                     command: 'extension.showWebView',
                     title: 'Show WebView',
@@ -28,7 +33,7 @@ export function setupView(context: vscode.ExtensionContext) {
 
         panel.webview.html = `<h1>About CommitGPT</h1>
         <p>
-        CommitGPT has been built by sid.ai, a company that is building the next generation of AI tools for developers.
+        CommitGPT is a one-day project by sid.ai, a company that is building the next generation of AI tools for developers.
         </p>`;
     });
 
