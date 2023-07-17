@@ -12,6 +12,23 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+          {
+              "id": "commitgptContainer",
+              "title": "CommitGPT",
+              "icon": "media/icon.svg"
+          }
+      ]
+    },
+    "views": {
+      "commitgptContainer": [
+        {
+            "id": "settingsView",
+            "name": "Settings"
+        }
+    ]
+    },
     "commands": [
       {
         "command": "extension.commitgpt",
@@ -25,8 +42,8 @@
     "keybindings": [
       {
         "command": "extension.commitgptHotkey",
-        "key": "ctrl+shift+a",
-        "mac": "cmd+shift+a",
+        "key": "ctrl+alt+c",
+        "mac": "cmd+alt+c",
         "when": "editorTextFocus"
       }
     ]

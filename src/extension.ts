@@ -3,8 +3,9 @@ import { exec as execCb } from 'child_process';
 import * as util from 'util';
 import * as path from 'path';
 import { OpenAI } from 'langchain';
+import { setupView } from './setupView';
 
-// convert exec callback function to a promise-based function
+
 const exec = util.promisify(execCb);
 
 export async function activate(context: vscode.ExtensionContext) {
@@ -37,7 +38,8 @@ export async function activate(context: vscode.ExtensionContext) {
                 const commitMessage = `[qs] ${changes}`;
 
                 try {
-                    await exec(`git commit -a -m "${commitMessage}"`, { cwd: workspacePath });
+                    await exec(`git commit -a -m "${commitMessage}+"
+					"\nCo-authored-by: CommitGPT by SID.ai <commitgpt@sid.ai>"`, { cwd: workspacePath });
                     vscode.window.showInformationMessage(`Commit successful: ${changes}`);
                 } catch (err) {
 					if (err instanceof Error) {
@@ -59,7 +61,10 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.commands.executeCommand('extension.commitgpt');
     });
 
+	setupView(context);
+
     context.subscriptions.push(hotkey);
 }
+
 
 export function deactivate() {}
