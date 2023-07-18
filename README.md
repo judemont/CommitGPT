@@ -20,7 +20,7 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-None, please report any issues [here](https://github.com/sidhq/CommitGPT/issues).
+Please report any issues [here](https://github.com/sidhq/CommitGPT/issues).
 
 ## Release Notes
 
