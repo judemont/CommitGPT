@@ -19,7 +19,7 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-None, please report any issues on github.com/sidhq/SID
+None, please report any issues [here](https://github.com/sidhq/CommitGPT/issues).
 
 ## Release Notes
 
