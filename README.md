@@ -24,6 +24,10 @@ Please report any issues [here](https://github.com/sidhq/CommitGPT/issues).
 
 ## Release Notes
 
+### 0.0.3
+
+General fixes and improvements
+
 ### 0.0.2
 
 Add Pirate Mode
