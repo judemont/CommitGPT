@@ -1,8 +1,8 @@
 {
   "name": "commitgpt",
   "displayName": "CommitGPT",
-  "description": "For anyone who hates writing commit messages. Use ChatGPT to automatically write your commit message and use one simple keybind to commit.",
-  "version": "0.0.1",
+  "description": "Automatically write commit message with ChatGPT",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.80.0"
   },
@@ -31,25 +31,14 @@
           "default": "",
           "title": "OPENAI_API_KEY (optional)",
           "description": "Your OpenAI API Key, if none is provided the extension will use SID's proxy server."
+        },
+        "commitgpt.pirateMode": {
+          "type": "boolean",
+          "default": false,
+          "title": "Pirate Mode",
+          "description": "???"
         }
       }
-    },
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "commitgptContainer",
-          "title": "CommitGPT",
-          "icon": "media/icon.svg"
-        }
-      ]
-    },
-    "views": {
-      "commitgptContainer": [
-        {
-          "id": "settingsView",
-          "name": "Settings"
-        }
-      ]
     },
     "commands": [
       {
