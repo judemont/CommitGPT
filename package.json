@@ -1,7 +1,7 @@
 {
   "name": "commitgpt",
   "displayName": "CommitGPT",
-  "description": "For anyone who hates writing commit messages. Use ChatGPT to automatically write your commit message and use one simple keybind to commit & push to remote.",
+  "description": "For anyone who hates writing commit messages. Use ChatGPT to automatically write your commit message and use one simple keybind to commit.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.80.0"

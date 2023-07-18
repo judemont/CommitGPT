@@ -81,7 +81,7 @@ export async function activate(context: vscode.ExtensionContext) {
         vscode.commands.executeCommand('extension.commitgpt');
     });
 
-	setupView(context);
+	//setupView(context);
 
     context.subscriptions.push(hotkey);
 }
