@@ -9,6 +9,7 @@
   "categories": [
     "Other"
   ],
+  "publisher": "sidhq",
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
