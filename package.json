@@ -2,6 +2,10 @@
   "name": "commitgpt",
   "displayName": "CommitGPT",
   "description": "Automatically write commit message with ChatGPT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sidhq/CommitGPT.git"
+  },
   "version": "0.0.2",
   "engines": {
     "vscode": "^1.80.0"
