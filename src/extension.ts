@@ -24,7 +24,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     if(pirateMode) {
                         vscode.window.showInformationMessage('Arr matey, no alterations be spotted. Ye need to stage yer new files afore ye can commit.');
                     } else {
-                        vscode.window.showErrorMessage('No changes detected. Note: New files need to be staged before committing.');
+                        vscode.window.showInformationMessage('No changes detected. Note: New files need to be staged before committing.');
                     }
                     return;
                 }
@@ -79,7 +79,7 @@ export async function activate(context: vscode.ExtensionContext) {
                     changes = apiResponse.data;
                 }
 
-                const commitMessage = `${changes} ${tag}`;
+                const commitMessage = `${changes} - ${tag}`;
 
                 try {
                     const coauthor = 'Co-authored-by: CommitGPT by SID.ai <commitgpt@sid.ai>';
@@ -103,14 +103,6 @@ export async function activate(context: vscode.ExtensionContext) {
     });
 
     context.subscriptions.push(disposable);
-
-    let hotkey = vscode.commands.registerCommand('extension.commitgptHotkey', () => {
-        vscode.commands.executeCommand('extension.commitgpt');
-    });
-
-	//setupView(context);
-
-    context.subscriptions.push(hotkey);
 }
 
 

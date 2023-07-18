@@ -1,7 +1,7 @@
 {
   "name": "commitgpt",
   "displayName": "CommitGPT",
-  "description": "Automatically write commit message with ChatGPT",
+  "description": "Automatically write commit messages with ChatGPT.",
   "repository": {
     "type": "git",
     "url": "https://github.com/sidhq/CommitGPT.git"
@@ -49,15 +49,11 @@
       {
         "command": "extension.commitgpt",
         "title": "CommitGPT Commit"
-      },
-      {
-        "command": "extension.commitgptHotkey",
-        "title": "CommitGPT Hotkey"
       }
     ],
     "keybindings": [
       {
-        "command": "extension.commitgptHotkey",
+        "command": "extension.commitgpt",
         "key": "ctrl+alt+c",
         "mac": "cmd+alt+c",
         "when": "editorTextFocus"
