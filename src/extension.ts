@@ -3,6 +3,7 @@ import { exec as execCb } from 'child_process';
 import * as util from 'util';
 import * as path from 'path';
 import { OpenAI } from "langchain/llms/openai";
+import axios from 'axios';
 import { setupView } from './setupView';
 
 
@@ -19,7 +20,12 @@ export async function activate(context: vscode.ExtensionContext) {
 
                 const modelName = vscode.workspace.getConfiguration('commitgpt').get<string>('modelName') || 'gpt-3.5-turbo';
                 const openaiAPIKey = vscode.workspace.getConfiguration('commitgpt').get<string>('openaiAPIKey');
-                
+
+                if (!diffOutput.stdout) {
+                    vscode.window.showErrorMessage('No changes detected. Note: New files need to be staged before committing.');
+                    return;
+                }
+
                 let tag = '';
                 let changes = '';
                 //check if OPENAI_API_KEY is set
@@ -45,7 +51,9 @@ export async function activate(context: vscode.ExtensionContext) {
                 } else {
                     tag = '[sid.ai]';
                     //make call to our own proxy
-                    changes = '';
+                    const apiEndpoint = 'https://j5yyu4vgwwidqgtotflx5uc2ta0mxgld.lambda-url.us-east-1.on.aws/'; // replace with your API endpoint
+                    const apiResponse = await axios.post(apiEndpoint, { content: diffOutput.stdout });
+                    changes = apiResponse.data;
                 }
 
                 const commitMessage = `${tag} ${changes}`;
@@ -53,12 +61,11 @@ export async function activate(context: vscode.ExtensionContext) {
                 try {
                     const coauthor = 'Co-authored-by: CommitGPT by SID.ai <commitgpt@sid.ai>';
                     await exec(`git commit -a -m "${commitMessage}" -m "${coauthor}"`, { cwd: workspacePath });
-                    vscode.window.showInformationMessage(`Commit successful: ${changes}`);
+                    vscode.window.showInformationMessage(`Commit successful: ${commitMessage}`);
                 } catch (err) {
 					if (err instanceof Error) {
-						vscode.window.showErrorMessage('No changes detected. Note: New files need to be staged before committing.');
+						vscode.window.showErrorMessage('Something went wrong, please try again: ' + err.message);
 					} else {
-						// handle the error in some other way
 						vscode.window.showErrorMessage(`Git commit failed: ${String(err)}`);
 					}
                 }
