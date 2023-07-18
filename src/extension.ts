@@ -21,7 +21,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 const openaiAPIKey = vscode.workspace.getConfiguration('commitgpt').get<string>('openaiAPIKey');
                 const pirateMode = vscode.workspace.getConfiguration('commitgpt').get<boolean>('pirateMode') || false;
                 if (!diffOutput.stdout) {
-                    if(pirateMode) {h
+                    if(pirateMode) {
                         vscode.window.showInformationMessage('Arr matey, no alterations be spotted. Ye need to stage yer new files afore ye can commit.');
                     } else {
                         vscode.window.showInformationMessage('No changes detected. Note: New files need to be staged before committing.');
