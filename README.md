@@ -14,14 +14,19 @@ None
 
 This extension contributes the following settings:
 
-* `myExtension.openaiAPIKey`: (optional) OpenAI API key. If not provided, uses sid.ai proxy server.
-* `myExtension.modelName`: Set CommitGPT to either use GPT-4 or GPT-3.5-turbo. It's important to note that this option will only be applicable if you've provided your own OpenAI API key.
+* `commitgpt.openaiAPIKey`: (optional) OpenAI API key. If not provided, uses sid.ai proxy server.
+* `commitgpt.modelName`: Set CommitGPT to either use GPT-4 or GPT-3.5-turbo. It's important to note that this option will only be applicable if you've provided your own OpenAI API key.
+* `commitgpt.pirateMode`: ???
 
 ## Known Issues
 
-None, please report any issues on github.com/sidhq/SID
+None, please report any issues [here](https://github.com/sidhq/CommitGPT/issues).
 
 ## Release Notes
+
+### 0.0.2
+
+Add Pirate Mode
 
 ### 0.0.1
 
