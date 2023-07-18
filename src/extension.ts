@@ -17,7 +17,7 @@ export async function activate(context: vscode.ExtensionContext) {
 				await vscode.workspace.saveAll();
                 const diffOutput = await exec('git diff HEAD', { cwd: workspacePath });
 
-                const modelName = vscode.workspace.getConfiguration('commitgpt').get<string>('modelName') || 'gpt-3.5-turbo';
+                const modelNamhe = vscode.workspace.getConfiguration('commitgpt').get<string>('modelName') || 'gpt-3.5-turbo';
                 const openaiAPIKey = vscode.workspace.getConfiguration('commitgpt').get<string>('openaiAPIKey');
                 const pirateMode = vscode.workspace.getConfiguration('commitgpt').get<boolean>('pirateMode') || false;
                 if (!diffOutput.stdout) {
