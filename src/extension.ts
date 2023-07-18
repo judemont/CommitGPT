@@ -17,13 +17,16 @@ export async function activate(context: vscode.ExtensionContext) {
 				await vscode.workspace.saveAll();
                 const diffOutput = await exec('git diff HEAD', { cwd: workspacePath });
 
+                const modelName = vscode.workspace.getConfiguration('commitgpt').get<string>('modelName') || 'gpt-3.5-turbo';
+                const openaiAPIKey = vscode.workspace.getConfiguration('commitgpt').get<string>('openaiAPIKey');
                 
                 let tag = '';
                 let changes = '';
                 //check if OPENAI_API_KEY is set
-                if (process.env.OPENAI_API_KEY) {
+                if (openaiAPIKey) {
                     const model = new OpenAI({
-                        modelName: "gpt-3.5-turbo",
+                        openAIApiKey: openaiAPIKey,
+                        modelName: modelName,
                         temperature: 0,
                     });
 
@@ -53,14 +56,14 @@ export async function activate(context: vscode.ExtensionContext) {
                     vscode.window.showInformationMessage(`Commit successful: ${changes}`);
                 } catch (err) {
 					if (err instanceof Error) {
-						vscode.window.showErrorMessage(`1Git commit failed: ${err.message}`);
+						vscode.window.showErrorMessage('No changes detected. Note: New files need to be staged before committing.');
 					} else {
 						// handle the error in some other way
-						vscode.window.showErrorMessage(`2Git commit failed: ${String(err)}`);
+						vscode.window.showErrorMessage(`Git commit failed: ${String(err)}`);
 					}
                 }
             } catch (err) {
-                vscode.window.showErrorMessage('Git diff failed: ' + String(err)  );
+                vscode.window.showErrorMessage('Something went wrong: ' + String(err)  );
             }
         }
     });

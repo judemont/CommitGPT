@@ -12,6 +12,24 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "CommitGPT",
+      "properties": {
+          "commitgpt.modelName": {
+              "type": "string",
+              "default": "gpt-3.5-turbo",
+              "enum": ["gpt-3.5-turbo", "gpt-4"],
+              "title": "Model",
+              "description": "Select the model for generating commit messages, if you are using SID's proxy server, the app will default to gpt-3.5-turbo."
+          },
+          "commitgpt.openaiAPIKey": {
+              "type": "string",
+              "default": "",
+              "title": "OPENAI_API_KEY (optional)",
+              "description": "Your OpenAI API Key, if none is provided the extension will use SID's proxy server."
+          }
+      }
+    },
     "viewsContainers": {
       "activitybar": [
           {
