@@ -23,6 +23,10 @@ None, please report any issues [here](https://github.com/sidhq/CommitGPT/issues)
 
 ## Release Notes
 
+### 0.0.2
+
+Add Pirate Mode
+
 ### 0.0.1
 
 Initial Release of CommitGPT
