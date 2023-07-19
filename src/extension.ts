@@ -9,13 +9,36 @@ import axios from 'axios';
 const exec = util.promisify(execCb);
 
 export async function activate(context: vscode.ExtensionContext) {
+    vscode.window.showInformationMessage('Committing staged changes...');
     let disposable = vscode.commands.registerCommand('extension.commitgpt', async () => {
         if (vscode.workspace.workspaceFolders !== undefined) {
             const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
             try {
+                vscode.window.showInformationMessage('Committing staged changes...');
+                try{
+                    const gitCheck = await exec('git rev-parse --is-inside-work-tree', { cwd: workspacePath });
+                    vscode.window.showInformationMessage('Committing staged changes: ' + gitCheck.stdout);
+                } catch (err) {
+                    // If 'git rev-parse --is-inside-work-tree' fails, git init has not been run
+                    vscode.window.showInformationMessage('This directory is not a Git repository. Please run "git init" to initialize it.');
+                    return;
+                }
+
 				await vscode.workspace.saveAll();
-                const diffOutput = await exec('git diff HEAD', { cwd: workspacePath });
+
+                
+                let diffCommand = 'git diff HEAD';
+                try {
+                    const logOutput = await exec('git rev-parse HEAD', { cwd: workspacePath });
+                    vscode.window.showInformationMessage('Committing staged changes: ' + logOutput.stdout);
+                } catch (err) {
+                    // If 'git rev-parse HEAD' fails, there are no commits yet
+                    vscode.window.showInformationMessage('No commits yet. Note: New files need to be staged before committing.');
+                    diffCommand = 'git diff --cached --name-status';
+                }
+
+                const diffOutput = await exec(diffCommand, { cwd: workspacePath });
 
                 const modelName = vscode.workspace.getConfiguration('commitgpt').get<string>('modelName') || 'gpt-3.5-turbo';
                 const openaiAPIKey = vscode.workspace.getConfiguration('commitgpt').get<string>('openaiAPIKey');
@@ -29,7 +52,6 @@ export async function activate(context: vscode.ExtensionContext) {
                     return;
                 }
 
-                let tag = '';
                 let changes = '';
                 //check if OPENAI_API_KEY is set
                 if (openaiAPIKey) {
@@ -68,26 +90,19 @@ export async function activate(context: vscode.ExtensionContext) {
                         changes = await pirateModel.call(piratePrompt);
                     }
                 } else {
-                    if(pirateMode) {
-                        tag = "Brought t' ye by th' fine seafarers o'er at SID.ai!";
-                    } else {
-                        tag = 'Invocation sponsored by SID.ai';
-                    }
                     //make call to our own proxy
                     const apiEndpoint = 'https://j5yyu4vgwwidqgtotflx5uc2ta0mxgld.lambda-url.us-east-1.on.aws/'; // replace with your API endpoint
                     const apiResponse = await axios.post(apiEndpoint, { content: diffOutput.stdout, pirateMode: pirateMode });
                     changes = apiResponse.data;
                 }
 
-                const commitMessage = `${changes} - ${tag}`;
-
                 try {
                     const coauthor = 'Co-authored-by: CommitGPT by SID.ai <commitgpt@sid.ai>';
                     await exec(`git commit -a -m "${changes}" -m "${coauthor}"`, { cwd: workspacePath });
                     if (pirateMode) {
-                        vscode.window.showInformationMessage(`Treasure stowed: ${commitMessage}`);
+                        vscode.window.showInformationMessage(`Treasure stowed: ${changes}`);
                     } else {
-                        vscode.window.showInformationMessage(`Commit successful: ${commitMessage}`);
+                        vscode.window.showInformationMessage(`Commit successful: ${changes}`);
                     }
                 } catch (err) {
 					if (err instanceof Error) {
