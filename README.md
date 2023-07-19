@@ -36,7 +36,7 @@ General fixes and improvements
 
 ### 0.0.2
 
-Add Pirate Mode
+Add Pirate Mode!
 
 ### 0.0.1
 
