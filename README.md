@@ -4,7 +4,7 @@ For anyone who hates writing commit messages. Use ChatGPT to automatically write
 
 ## Features
 
-Use CTRL+ALT+C or CMD+ALT+C (Mac) to commit all changes and automatically generate a fitting commit message.
+Use CTRL+SHIFT+A or CMD+SHIFT+A (Mac) to commit all changes and automatically generate a fitting commit message.
 
 ## Requirements
 
@@ -23,6 +23,12 @@ This extension contributes the following settings:
 Please report any issues [here](https://github.com/sidhq/CommitGPT/issues).
 
 ## Release Notes
+
+### 0.0.4
+
+- Fix bug first commit not working
+- Fix bug when using the keybind and git is not initialized yet
+- Change default keybind
 
 ### 0.0.3
 

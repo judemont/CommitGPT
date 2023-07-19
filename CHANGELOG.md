@@ -6,7 +6,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [0.0.4]
 
-- Fix bug on first commit 
+- Fix bug first commit not working
+- Fix bug when using the keybind and git is not initialized yet
+- Changed Mac default keybind
 
 ## [0.0.3]
 

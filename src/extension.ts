@@ -9,16 +9,13 @@ import axios from 'axios';
 const exec = util.promisify(execCb);
 
 export async function activate(context: vscode.ExtensionContext) {
-    vscode.window.showInformationMessage('Committing staged changes...');
     let disposable = vscode.commands.registerCommand('extension.commitgpt', async () => {
         if (vscode.workspace.workspaceFolders !== undefined) {
             const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
             try {
-                vscode.window.showInformationMessage('Committing staged changes...');
                 try{
-                    const gitCheck = await exec('git rev-parse --is-inside-work-tree', { cwd: workspacePath });
-                    vscode.window.showInformationMessage('Committing staged changes: ' + gitCheck.stdout);
+                    await exec('git rev-parse --is-inside-work-tree', { cwd: workspacePath });
                 } catch (err) {
                     // If 'git rev-parse --is-inside-work-tree' fails, git init has not been run
                     vscode.window.showInformationMessage('This directory is not a Git repository. Please run "git init" to initialize it.');
@@ -30,14 +27,11 @@ export async function activate(context: vscode.ExtensionContext) {
                 
                 let diffCommand = 'git diff HEAD';
                 try {
-                    const logOutput = await exec('git rev-parse HEAD', { cwd: workspacePath });
-                    vscode.window.showInformationMessage('Committing staged changes: ' + logOutput.stdout);
+                    await exec('git rev-parse HEAD', { cwd: workspacePath });
                 } catch (err) {
                     // If 'git rev-parse HEAD' fails, there are no commits yet
-                    vscode.window.showInformationMessage('No commits yet. Note: New files need to be staged before committing.');
-                    diffCommand = 'git diff --cached --name-status';
+                    diffCommand = 'git diff --cached';
                 }
-
                 const diffOutput = await exec(diffCommand, { cwd: workspacePath });
 
                 const modelName = vscode.workspace.getConfiguration('commitgpt').get<string>('modelName') || 'gpt-3.5-turbo';
@@ -112,7 +106,7 @@ export async function activate(context: vscode.ExtensionContext) {
 					}
                 }
             } catch (err) {
-                vscode.window.showErrorMessage('Something went wrong: ' + String(err)  );
+                vscode.window.showErrorMessage('Something weent wrong: ' + String(err)  );
             }
         }
     });
