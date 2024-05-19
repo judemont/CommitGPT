@@ -91,8 +91,7 @@ export async function activate(context: vscode.ExtensionContext) {
                 }
 
                 try {
-                    const coauthor = 'Co-authored-by: CommitGPT by SID.ai <commitgpt@sid.ai>';
-                    await exec(`git commit -a -m "${changes}" -m "${coauthor}"`, { cwd: workspacePath });
+                    await exec(`git commit -a -m "${changes}" `, { cwd: workspacePath });
                     if (pirateMode) {
                         vscode.window.showInformationMessage(`Treasure stowed: ${changes}`);
                     } else {
